@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Lab Report Cover Page Generator – Metropolitan University</title>
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&family=Hind+Siliguri:wght@400;600&display=swap" rel="stylesheet"/>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Source Sans 3', sans-serif; background: #eef1f7; min-height: 100vh; color: #1e2a3a; }
+
+nav {
+  background: #1a3a6b; padding: 14px 32px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+nav .nav-title { color: white; font-size: 15px; font-weight: 600; }
+nav .nav-sub { color: #a8bcd8; font-size: 12px; margin-top: 2px; }
+nav a {
+  color: #a8bcd8; text-decoration: none; font-size: 13px;
+  border: 1px solid #a8bcd8; padding: 6px 14px; border-radius: 6px; transition: all 0.2s;
+}
+nav a:hover { color: white; border-color: white; }
+
+.page-wrap {
+  display: flex; gap: 28px; max-width: 1180px;
+  margin: 32px auto; padding: 0 20px;
+  align-items: flex-start; flex-wrap: wrap;
+}
+
+.form-panel {
+  background: white; border-radius: 14px; padding: 28px;
+  flex: 0 0 350px; box-shadow: 0 4px 20px rgba(26,58,107,0.09);
+}
+.form-panel h2 { font-size: 17px; font-weight: 700; color: #1a3a6b; margin-bottom: 4px; }
+.form-panel .subtitle { font-size: 13px; color: #8896a8; margin-bottom: 20px; }
+.sec-label {
+  font-size: 11px; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase;
+  color: #c0392b; margin: 18px 0 10px; padding-bottom: 5px; border-bottom: 1.5px solid #edf0f7;
+}
+.field { margin-bottom: 12px; }
+label { display: block; font-size: 12px; font-weight: 600; color: #7a8898; margin-bottom: 4px; }
+input, textarea {
+  width: 100%; padding: 9px 12px; border: 1.5px solid #dde4f0; border-radius: 8px;
+  font-family: 'Source Sans 3', sans-serif; font-size: 13.5px;
+  color: #1e2a3a; background: #f8fafd; outline: none; transition: border-color 0.2s, box-shadow 0.2s;
+}
+input:focus, textarea:focus { border-color: #1a3a6b; background: white; box-shadow: 0 0 0 3px rgba(26,58,107,0.08); }
+textarea { resize: vertical; min-height: 54px; }
+
+.btn-generate {
+  width: 100%; margin-top: 22px; padding: 13px; background: #1a3a6b; color: white;
+  border: none; border-radius: 10px; font-family: 'Source Sans 3', sans-serif;
+  font-size: 14.5px; font-weight: 700; cursor: pointer; transition: background 0.2s;
+}
+.btn-generate:hover { background: #142e57; }
+.btn-print {
+  width: 100%; margin-top: 10px; padding: 11px; background: transparent;
+  color: #1a3a6b; border: 1.5px solid #1a3a6b; border-radius: 10px;
+  font-family: 'Source Sans 3', sans-serif; font-size: 14px; font-weight: 600;
+  cursor: pointer; transition: background 0.2s;
+}
+.btn-print:hover { background: #eef1f8; }
+
+.preview-panel { flex: 1; min-width: 300px; }
+.preview-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+.plabel { font-size: 12px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: #8896a8; }
+.live-dot { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; color: #27ae60; font-weight: 600; }
+.live-dot::before {
+  content: ''; display: inline-block; width: 8px; height: 8px;
+  background: #27ae60; border-radius: 50%; animation: pulse 1.5s ease-in-out infinite;
+}
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+
+/* ── A4 COVER PAGE ── */
+#cover-page {
+  background: white; width: 100%; max-width: 640px; min-height: 900px;
+  margin: 0 auto; padding: 60px 72px 50px;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.13); border-radius: 4px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.mu-logo { text-align: center; margin-bottom: 40px; line-height: 1; }
+.mu-bengali { font-family: 'Hind Siliguri', sans-serif; font-size: 17px; font-style: italic; color: #111; margin-bottom: 2px; display: block; }
+.mu-metro { font-family: 'Arial Black', Arial, sans-serif; font-size: 52px; font-weight: 900; font-style: italic; color: #1a3a8f; letter-spacing: -1px; line-height: 1.05; display: block; }
+.mu-uni-row { display: flex; align-items: center; justify-content: center; margin-top: 2px; gap: 4px; }
+.mu-uni-text { font-family: Arial, sans-serif; font-size: 15px; letter-spacing: 3.5px; color: #555; font-weight: 400; }
+.mu-uni-text .u-bold { font-style: italic; font-weight: 900; color: #1a3a8f; font-size: 18px; letter-spacing: 0; }
+
+.cp-main-title { text-align: center; font-size: 26px; font-weight: 700; color: #111; margin: 32px 0 28px; font-family: Arial, sans-serif; }
+
+.cp-info-block { font-size: 14.5px; color: #111; margin-bottom: 30px; font-family: Arial, sans-serif; }
+.cp-info-row { display: flex; gap: 16px; margin-bottom: 6px; align-items: flex-start; }
+.cp-info-key { font-weight: 700; min-width: 128px; flex-shrink: 0; }
+
+.cp-section-head { font-size: 19px; font-weight: 700; color: #111; margin: 28px 0 12px; font-family: Arial, sans-serif; }
+.cp-person { font-size: 14.5px; line-height: 1.85; color: #111; margin-left: 64px; font-family: Arial, sans-serif; }
+
+@media print {
+  body { background: white; }
+  nav, .form-panel, .preview-top { display: none !important; }
+  .page-wrap { margin: 0; padding: 0; display: block; }
+  .preview-panel { width: 100%; }
+  #cover-page { box-shadow: none; max-width: 100%; border-radius: 0; min-height: unset; padding: 60px 72px 50px; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div>
+    <div class="nav-title">🧪 Lab Report Cover Page Generator</div>
+    <div class="nav-sub">Metropolitan University, Sylhet</div>
+  </div>
+  <a href="assignment-cover.html">Switch to Assignment →</a>
+</nav>
+
+<div class="page-wrap">
+
+  <!-- FORM -->
+  <div class="form-panel">
+    <h2>Fill in Details</h2>
+    <p class="subtitle">Preview updates live as you type.</p>
+
+    <div class="sec-label">Lab Report Info</div>
+    <div class="field">
+      <label>Lab Report Number</label>
+      <input type="text" id="f-lnum" placeholder="e.g. 04" value="04" oninput="generate()"/>
+    </div>
+    <div class="field">
+      <label>Experiment Number</label>
+      <input type="text" id="f-enum" placeholder="e.g. 04" value="04" oninput="generate()"/>
+    </div>
+    <div class="field">
+      <label>Experiment Title (optional)</label>
+      <textarea id="f-etitle" placeholder="e.g. Study of Basic Logic Gates" oninput="generate()"></textarea>
+    </div>
+    <div class="field">
+      <label>Course Name</label>
+      <input type="text" id="f-cname" value="Structured Programming" oninput="generate()"/>
+    </div>
+    <div class="field">
+      <label>Course Code</label>
+      <input type="text" id="f-ccode" value="CSE-122" oninput="generate()"/>
+    </div>
+
+    <div class="sec-label">Submitted To</div>
+    <div class="field">
+      <label>Teacher Name</label>
+      <input type="text" id="f-tname" value="Rishad Amin Pulok" oninput="generate()"/>
+    </div>
+    <div class="field">
+      <label>Designation</label>
+      <input type="text" id="f-tdesig" value="Senior Lecturer" oninput="generate()"/>
+    </div>
+    <div class="field">
+      <label>Department</label>
+      <input type="text" id="f-tdept" value="Dept. of Computer Science & Engineering" oninput="generate()"/>
+    </div>
+
+    <div class="sec-label">Submitted By</div>
+    <div class="field">
+      <label>Your Name</label>
+      <input type="text" id="f-sname" placeholder="e.g. Bikash Talukder" oninput="generate()"/>
+    </div>
+    <div class="field">
+      <label>Student ID</label>
+      <input type="text" id="f-sid" placeholder="e.g. 251-115-082" oninput="generate()"/>
+    </div>
+    <div class="field">
+      <label>Batch</label>
+      <input type="text" id="f-batch" placeholder="e.g. CSE-62" oninput="generate()"/>
+    </div>
+    <div class="field">
+      <label>Section</label>
+      <input type="text" id="f-sec" placeholder="e.g. B" oninput="generate()"/>
+    </div>
+    <div class="field">
+      <label>Your Department</label>
+      <input type="text" id="f-sdept" value="Dept. of Computer Science & Engineering" oninput="generate()"/>
+    </div>
+
+    <button class="btn-generate" onclick="generate()">⚡ Generate Cover Page</button>
+    <button class="btn-print" onclick="window.print()">🖨️ Print / Save as PDF</button>
+  </div>
+
+  <!-- PREVIEW -->
+  <div class="preview-panel">
+    <div class="preview-top">
+      <div class="plabel">Live Preview</div>
+      <div class="live-dot">Live</div>
+    </div>
+
+    <div id="cover-page">
+
+      <!-- EXACT LOGO -->
+      <div class="mu-logo">
+        <span class="mu-bengali">মেট্রোপলিটন ইউনিভার্সিটি</span>
+        <span class="mu-metro">Metropolitan</span>
+        <div class="mu-uni-row">
+          <svg width="62" height="26" viewBox="0 0 62 26" xmlns="http://www.w3.org/2000/svg">
+            <polygon points="0,25 10,1 22,1 12,25" fill="#9a9a9a"/>
+            <polygon points="8,25 18,1 32,1 22,25" fill="#cc2222"/>
+            <polygon points="20,25 30,1 42,1 32,25" fill="#666"/>
+          </svg>
+          <span class="mu-uni-text"><span class="u-bold">U</span>NIVERSITY</span>
+        </div>
+      </div>
+
+      <!-- Title -->
+      <div class="cp-main-title" id="cp-title">Lab Report - 04</div>
+
+      <!-- Info -->
+      <div class="cp-info-block">
+        <div class="cp-info-row">
+          <span class="cp-info-key">Experiment on</span>
+          <span id="cp-enum">04</span>
+        </div>
+        <div class="cp-info-row" id="cp-etitle-row" style="display:none">
+          <span class="cp-info-key">Experiment:</span>
+          <span id="cp-etitle"></span>
+        </div>
+        <div class="cp-info-row">
+          <span class="cp-info-key">Course Name:</span>
+          <span id="cp-cname">Structured Programming</span>
+        </div>
+        <div class="cp-info-row">
+          <span class="cp-info-key">Course Code:</span>
+          <span id="cp-ccode">CSE-122</span>
+        </div>
+      </div>
+
+      <!-- Submitted To -->
+      <div class="cp-section-head">Submitted to</div>
+      <div class="cp-person">
+        <div id="cp-tname">Rishad Amin Pulok</div>
+        <div id="cp-tdesig">Senior Lecturer</div>
+        <div id="cp-tdept">Dept. of Computer Science &amp; Engineering</div>
+        <div>Metropolitan University, Sylhet</div>
+      </div>
+
+      <!-- Submitted By -->
+      <div class="cp-section-head">Submitted by</div>
+      <div class="cp-person">
+        <div id="cp-sname" style="color:#bbb;font-style:italic">Your Name</div>
+        <div>ID: <span id="cp-sid" style="color:#bbb;font-style:italic">Your ID</span></div>
+        <div>Batch: <span id="cp-batch" style="color:#bbb;font-style:italic">Your Batch</span></div>
+        <div>Section: <span id="cp-ssec" style="color:#bbb;font-style:italic">Your Section</span></div>
+        <div id="cp-sdept">Dept. of Computer Science &amp; Engineering</div>
+        <div>Metropolitan University, Sylhet</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function val(id) { return document.getElementById(id).value.trim(); }
+function set(id, text, fallback) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.textContent = text || fallback;
+  el.style.color = text ? '#111' : '#bbb';
+  el.style.fontStyle = text ? 'normal' : 'italic';
+}
+
+function generate() {
+  document.getElementById('cp-title').textContent = 'Lab Report - ' + (val('f-lnum') || '01');
+  set('cp-enum',  val('f-enum'),  'Experiment No.');
+  set('cp-cname', val('f-cname'), 'Course Name');
+  set('cp-ccode', val('f-ccode'), 'Course Code');
+  set('cp-tname', val('f-tname'), 'Teacher Name');
+  set('cp-tdesig',val('f-tdesig'),'Designation');
+  set('cp-tdept', val('f-tdept'), 'Department');
+  set('cp-sname', val('f-sname'), 'Your Name');
+  set('cp-sid',   val('f-sid'),   'Your ID');
+  set('cp-batch', val('f-batch'), 'Your Batch');
+  set('cp-ssec',  val('f-sec'),   'Your Section');
+  set('cp-sdept', val('f-sdept'), 'Department');
+
+  const etitle = val('f-etitle');
+  document.getElementById('cp-etitle-row').style.display = etitle ? 'flex' : 'none';
+  if (etitle) document.getElementById('cp-etitle').textContent = etitle;
+}
+
+generate();
+</script>
+</body>
+</html>
