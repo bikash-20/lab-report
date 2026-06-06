@@ -1,4 +1,5 @@
 # 🧪 Lab Report Cover Page Generator
+live link: https://bikash-20.github.io/cover-page-generator/
 
 A sleek, lightweight, client-side web application designed to help university students instantly generate standardized, print-ready lab report cover pages. 
 
